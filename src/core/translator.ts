@@ -1,9 +1,4 @@
 import { GoogleTranslatorTokenFree } from '@translate-tools/core/translators/GoogleTranslator';
-import { config } from '@config';
-
-process.env.http_proxy = config.proxy;
-process.env.https_proxy = config.proxy;
-process.env.all_proxy = config.proxy;
 
 const translator = new GoogleTranslatorTokenFree({
   headers: {

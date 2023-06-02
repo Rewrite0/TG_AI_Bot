@@ -2,19 +2,28 @@ import { URL } from 'node:url';
 import { config } from '@config';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
+type Auth =
+  | undefined
+  | {
+      username: string;
+      password: string;
+    };
+
 export function getProxy() {
+  if (config.proxy === '') return undefined;
   const url = config.proxy;
 
-  const { protocol: proto, username, password, hostname, port } = new URL(url);
+  const {
+    protocol: protocolRaw,
+    username,
+    password,
+    hostname,
+    port,
+  } = new URL(url);
 
-  const protocol = proto.replace(':', '') as 'http' | 'https';
+  const protocol = protocolRaw.replace(':', '') as 'http' | 'https';
 
-  let auth:
-    | {
-        username: string;
-        password: string;
-      }
-    | undefined;
+  let auth: Auth;
 
   if (username !== '' && password !== '') {
     auth = {
@@ -25,12 +34,21 @@ export function getProxy() {
 
   return {
     protocol,
-    hostname,
+    host: hostname,
     port: Number(port),
     auth,
   };
 }
 
 export function createProxy() {
+  if (config.proxy === '') return undefined;
   return new HttpsProxyAgent(config.proxy);
+}
+
+export function setProxyEnv() {
+  if (config.proxy !== '') {
+    process.env.http_proxy = config.proxy;
+    process.env.https_proxy = config.proxy;
+    process.env.all_proxy = config.proxy;
+  }
 }
