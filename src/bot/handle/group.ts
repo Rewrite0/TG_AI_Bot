@@ -25,8 +25,9 @@ handleGroup.on('message::mention', async (ctx) => {
   // 判断是否可用
   if (!ctx.session.isUse) return;
   const message = ctx.message;
+  const name = ctx.me.username;
 
-  if (message.text) {
+  if (message.text && message.text.startsWith(`@${name}`)) {
     /** 剔除 @botusername 字符, 仅获取信息 */
     const text = message.text.replace(/@\w+\s/g, '');
     const id = ctx.from.id;
