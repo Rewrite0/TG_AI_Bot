@@ -18,7 +18,11 @@ handlePrivate.on('message:text', async (ctx) => {
 
   const msg = message.text;
 
+  const m = await ctx.reply('请等待...');
+
   const final = await chat(msg, id);
+
+  await ctx.api.deleteMessage(m.chat.id, m.message_id);
 
   await ctx.reply(final, { parse_mode: 'Markdown' });
 });
