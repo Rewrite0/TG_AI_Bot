@@ -32,7 +32,9 @@ handleGroup.on('message::mention', async (ctx) => {
     const text = message.text.replace(/@\w+\s/g, '');
     const id = ctx.from.id;
 
-    const m = await ctx.reply('请等待...');
+    const m = await ctx.reply('请等待...', {
+      reply_to_message_id: ctx.msg.message_id,
+    });
     const final = await chat(text, id);
 
     await ctx.api.deleteMessage(m.chat.id, m.message_id);
