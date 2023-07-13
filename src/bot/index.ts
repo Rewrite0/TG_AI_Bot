@@ -33,7 +33,7 @@ export async function runBot() {
   bot.use(handlePrivate);
 
   bot.catch((err) => {
-    console.log(`Error: \n${err}`);
+    console.log(`Bot Error: \n${err}`);
   });
 
   // run
