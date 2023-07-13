@@ -1,7 +1,7 @@
 import { Composer } from 'grammy';
 import type { MyContext } from '#/bot';
-import { bard } from '@/core/bard';
 import { isAdminUser, useBot } from '@/utils/useBot';
+import { useConversations } from '@/utils/bardConversations';
 
 export const handleCommand = new Composer<MyContext>();
 
@@ -12,11 +12,11 @@ handleCommand.command('reset', async (ctx) => {
 
   if (type === 'group' || type === 'supergroup') {
     if (ctx.from && ctx.from.id) {
-      bard.resetConversation(ctx.from.id.toString());
+      useConversations(ctx.from.id).del();
     }
   }
   if (type === 'private') {
-    bard.resetConversation(ctx.chat.id.toString());
+    useConversations(ctx.chat.id).del();
   }
 
   await ctx.reply('对话已重置!', {
@@ -84,5 +84,23 @@ handleCommand.command('not_allow', async (ctx) => {
         reply_to_message_id: ctx.msg.message_id,
       });
     }
+  }
+});
+
+handleCommand.command('status', async (ctx) => {
+  const type = ctx.chat.type;
+  const isPrivate = type === 'private';
+  const session = ctx.session;
+
+  if (isPrivate) return;
+
+  if (session.isUse) {
+    ctx.reply('当前群组可使用!', {
+      reply_to_message_id: ctx.msg.message_id,
+    });
+  } else {
+    ctx.reply('当前群组不可使用!', {
+      reply_to_message_id: ctx.msg.message_id,
+    });
   }
 });

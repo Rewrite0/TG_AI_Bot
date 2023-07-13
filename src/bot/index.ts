@@ -7,12 +7,25 @@ export async function runBot() {
   // plugins
   bot.use(sessionFileStore);
 
-  await bot.api.setMyCommands([
-    { command: 'help', description: '帮助' },
-    { command: 'reset', description: '重置对话' },
-    { command: 'allow', description: '仅管理员可用, 允许该群组使用Bot' },
-    { command: 'not_allow', description: '仅管理员可用, 禁止该群组使用Bot' },
-  ]);
+  (async () => {
+    try {
+      await bot.api.setMyCommands([
+        { command: 'help', description: '帮助' },
+        { command: 'reset', description: '重置对话' },
+        { command: 'allow', description: '仅管理员可用, 允许该群组使用Bot' },
+        {
+          command: 'not_allow',
+          description: '仅管理员可用, 禁止该群组使用Bot',
+        },
+        {
+          command: 'status',
+          description: '查看当前群组是否可使用',
+        },
+      ]);
+    } catch (error) {
+      console.log(`Error: \n${error}`);
+    }
+  })();
 
   // handles
   bot.use(handleCommand);

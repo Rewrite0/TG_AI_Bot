@@ -1,14 +1,10 @@
-import { Bard } from 'googlebard';
+import Bard from 'bard-ai';
 import { config } from '@config';
-import { getProxy } from '@/utils/proxy';
 
-const cookies = `__Secure-1PSID=${config.bardCookie}`;
+async function BardInit() {
+  const cookies = config.bardCookie;
+  await Bard.init(cookies);
+  console.log('Bard init');
+}
 
-const proxy = getProxy();
-
-export const bard = new Bard(cookies, {
-  inMemory: false,
-  // 用于存储聊天上下文信息
-  savePath: 'conversations.json',
-  proxy,
-});
+export { BardInit, Bard };
