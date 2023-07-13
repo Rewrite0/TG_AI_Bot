@@ -19,9 +19,11 @@ function bardConsole(msg: string) {
 export async function chat(message: string, chatId: number) {
   myConsole(message);
 
-  const reply = await bard.ask(message, chatId.toString());
-
-  bardConsole(reply);
-
-  return reply;
+  try {
+    const reply = await bard.ask(message, chatId.toString());
+    bardConsole(reply);
+    return reply;
+  } catch (error) {
+    return `Error: \n\n ${error}`;
+  }
 }
