@@ -2,6 +2,7 @@ import { Composer } from 'grammy';
 import type { MyContext } from '#/bot';
 import { isAdminUser, useBot } from '@/utils/useBot';
 import { useConversations } from '@/utils/bardConversations';
+import { bot } from '@/core/bot';
 
 export const handleCommand = new Composer<MyContext>();
 
@@ -34,15 +35,9 @@ handleCommand.command('help', async (ctx) => {
   const type = ctx.chat.type;
   const isPrivate = type === 'private';
 
-  const message = `这是一个可以与 Google Bard 对话的 bot.
-\n\n每个人有独立的对话上下文.
-\n\n- 使用 /reset 可以重置对话.
-\n- 使用 /status 查看当前群组是否可用.
-\n- 使用 /allow 仅管理员可用, 允许当前群组使用.
-\n- 使用 /not_allow 仅管理员可用, 禁止当前群组使用.`;
+  const message = `这是一个可以与 Google Bard 对话的 bot. \n\n每个人有独立的对话上下文. \n\n- 使用 /reset 可以重置对话. \n- 使用 /status 查看当前群组是否可用. \n- 使用 /allow 仅管理员可用, 允许当前群组使用. \n- 使用 /not_allow 仅管理员可用, 禁止当前群组使用.`;
 
   await ctx.reply(message, {
-    parse_mode: 'Markdown',
     reply_to_message_id: isPrivate ? undefined : ctx.msg.message_id,
   });
 });
