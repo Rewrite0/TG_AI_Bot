@@ -25,6 +25,9 @@ export async function runBot() {
 
   // run
   const handle = run(bot);
+
+  console.log('bot is running...');
+
   handle.task()?.then(() => {
     handle.stop();
   });
