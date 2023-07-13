@@ -1,18 +1,14 @@
 import { bard } from '@/core/bard';
-import { en2zh, zh2en } from '@/core/translator';
 
-function myPart(msg: string, msgEn: string) {
+function myConsole(msg: string) {
   console.log('========================');
-  console.log(`My: ${msg}\n--------------\n${msgEn}`);
+  console.log(`My: ${msg}`);
   console.log('====');
 }
 
-function BardPart(msg: string, msgZh: string) {
-  const final = `${msg}\n-------------\n${msgZh}`;
-  console.log(`Bard: ${final}`);
+function bardConsole(msg: string) {
+  console.log(`Bard: ${msg}`);
   console.log('========================');
-
-  return final;
 }
 
 /**
@@ -21,12 +17,11 @@ function BardPart(msg: string, msgZh: string) {
  * @param chatId 聊天人的id, 私聊是 chat.id 群组是 from.id
  */
 export async function chat(message: string, chatId: number) {
-  const enMsg = await zh2en(message);
+  myConsole(message);
 
-  myPart(message, enMsg);
+  const reply = await bard.ask(message, chatId.toString());
 
-  const reply = await bard.ask(enMsg, chatId.toString());
-  const zhReply = await en2zh(reply);
+  bardConsole(reply);
 
-  return BardPart(reply, zhReply);
+  return reply;
 }
