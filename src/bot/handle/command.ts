@@ -1,7 +1,7 @@
 import { Composer } from 'grammy';
 import type { MyContext } from '#/bot';
 import { bard } from '@/core/bard';
-import { useBot } from '@/utils/useBot';
+import { isAdminUser, useBot } from '@/utils/useBot';
 
 export const handleCommand = new Composer<MyContext>();
 
@@ -41,4 +41,48 @@ handleCommand.command('help', async (ctx) => {
       reply_to_message_id: isPrivate ? undefined : ctx.msg.message_id,
     }
   );
+});
+
+handleCommand.command('allow', async (ctx) => {
+  const type = ctx.chat.type;
+  const isPrivate = type === 'private';
+  const session = ctx.session;
+  const fromId = ctx.from?.id;
+
+  if (isPrivate) {
+    ctx.reply('仅群组中可用!');
+  } else {
+    if (fromId && isAdminUser(fromId)) {
+      session.isUse = true;
+      ctx.reply('已允许该群组使用!', {
+        reply_to_message_id: ctx.msg.message_id,
+      });
+    } else {
+      ctx.reply('仅管理员可使用此命令!', {
+        reply_to_message_id: ctx.msg.message_id,
+      });
+    }
+  }
+});
+
+handleCommand.command('not_allow', async (ctx) => {
+  const type = ctx.chat.type;
+  const isPrivate = type === 'private';
+  const session = ctx.session;
+  const fromId = ctx.from?.id;
+
+  if (isPrivate) {
+    ctx.reply('仅群组中可用!');
+  } else {
+    if (fromId && isAdminUser(fromId)) {
+      session.isUse = false;
+      ctx.reply('已禁止该群组使用!', {
+        reply_to_message_id: ctx.msg.message_id,
+      });
+    } else {
+      ctx.reply('仅管理员可使用此命令!', {
+        reply_to_message_id: ctx.msg.message_id,
+      });
+    }
+  }
 });

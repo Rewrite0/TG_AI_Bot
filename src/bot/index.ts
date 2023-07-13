@@ -10,6 +10,8 @@ export async function runBot() {
   await bot.api.setMyCommands([
     { command: 'help', description: '帮助' },
     { command: 'reset', description: '重置对话' },
+    { command: 'allow', description: '仅管理员可用, 允许该群组使用Bot' },
+    { command: 'not_allow', description: '仅管理员可用, 禁止该群组使用Bot' },
   ]);
 
   // handles
