@@ -40,7 +40,6 @@ handleGroup.on('message::mention', async (ctx) => {
     await ctx.api.deleteMessage(m.chat.id, m.message_id);
 
     await ctx.reply(final, {
-      parse_mode: 'MarkdownV2',
       reply_to_message_id: ctx.msg.message_id,
     });
   }
