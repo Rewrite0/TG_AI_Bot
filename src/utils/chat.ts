@@ -1,5 +1,4 @@
-import { useConversations } from './bardConversations';
-import { Bard } from '@/core/bard';
+import { bard } from '@/core/bard';
 
 function myConsole(msg: string) {
   console.log('========================');
@@ -21,23 +20,13 @@ export async function chat(message: string, id: number) {
   myConsole(message);
 
   try {
-    const conversation = useConversations(id);
-    const ids = conversation.get();
-
-    const bardChat = new Bard.Chat(ids);
-
-    const reply = (await bardChat.ask(message)) as string;
+    const reply = await bard.ask(message, `id-${id}`);
 
     bardConsole(reply);
 
-    const data = bardChat.export();
-
-    if (data) {
-      conversation.save(data);
-    }
-
     return reply;
   } catch (error) {
-    return `Chat Error: \n\n ${error}`;
+    console.log(`Chat Error: \n\n ${error}`);
+    return '回复时出现错误, 请查看日志!';
   }
 }

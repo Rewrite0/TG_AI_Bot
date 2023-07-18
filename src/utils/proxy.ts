@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { URL } from 'node:url';
 import { config } from '@config';
 import { HttpsProxyAgent } from 'https-proxy-agent';

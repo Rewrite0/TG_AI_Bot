@@ -1,10 +1,33 @@
 import { Composer } from 'grammy';
 import type { MyContext } from '#/bot';
 import { isAdminUser, useBot } from '@/utils/useBot';
-import { useConversations } from '@/utils/bardConversations';
+import { bard } from '@/core/bard';
 import { bot } from '@/core/bot';
 
 export const handleCommand = new Composer<MyContext>();
+
+export async function setCommands() {
+  try {
+    console.log('set commands...');
+    await bot.api.setMyCommands([
+      { command: 'help', description: '帮助' },
+      { command: 'reset', description: '重置对话' },
+      { command: 'allow', description: '仅管理员可用, 允许该群组使用Bot' },
+      {
+        command: 'not_allow',
+        description: '仅管理员可用, 禁止该群组使用Bot',
+      },
+      {
+        command: 'status',
+        description: '查看当前群组是否可使用',
+      },
+    ]);
+    console.log('set commands success!');
+  } catch (error) {
+    console.log('set commands fail!');
+    console.log(`Error: \n${error}`);
+  }
+}
 
 // 监听命令
 handleCommand.command('reset', async (ctx) => {
@@ -13,11 +36,11 @@ handleCommand.command('reset', async (ctx) => {
 
   if (type === 'group' || type === 'supergroup') {
     if (ctx.from && ctx.from.id) {
-      useConversations(ctx.from.id).del();
+      bard.resetConversation(`id-${ctx.from.id}`);
     }
   }
   if (type === 'private') {
-    useConversations(ctx.chat.id).del();
+    bard.resetConversation(`id-${ctx.chat.id}`);
   }
 
   await ctx.reply('对话已重置!', {
@@ -49,15 +72,15 @@ handleCommand.command('allow', async (ctx) => {
   const fromId = ctx.from?.id;
 
   if (isPrivate) {
-    ctx.reply('仅群组中可用!');
+    await ctx.reply('仅群组中可用!');
   } else {
     if (fromId && isAdminUser(fromId)) {
       session.isUse = true;
-      ctx.reply('已允许该群组使用!', {
+      await ctx.reply('已允许该群组使用!', {
         reply_to_message_id: ctx.msg.message_id,
       });
     } else {
-      ctx.reply('仅管理员可使用此命令!', {
+      await ctx.reply('仅管理员可使用此命令!', {
         reply_to_message_id: ctx.msg.message_id,
       });
     }
@@ -71,15 +94,15 @@ handleCommand.command('not_allow', async (ctx) => {
   const fromId = ctx.from?.id;
 
   if (isPrivate) {
-    ctx.reply('仅群组中可用!');
+    await ctx.reply('仅群组中可用!');
   } else {
     if (fromId && isAdminUser(fromId)) {
       session.isUse = false;
-      ctx.reply('已禁止该群组使用!', {
+      await ctx.reply('已禁止该群组使用!', {
         reply_to_message_id: ctx.msg.message_id,
       });
     } else {
-      ctx.reply('仅管理员可使用此命令!', {
+      await ctx.reply('仅管理员可使用此命令!', {
         reply_to_message_id: ctx.msg.message_id,
       });
     }
@@ -94,11 +117,11 @@ handleCommand.command('status', async (ctx) => {
   if (isPrivate) return;
 
   if (session.isUse) {
-    ctx.reply('当前群组可使用!', {
+    await ctx.reply('当前群组可使用!', {
       reply_to_message_id: ctx.msg.message_id,
     });
   } else {
-    ctx.reply('当前群组不可使用!', {
+    await ctx.reply('当前群组不可使用!', {
       reply_to_message_id: ctx.msg.message_id,
     });
   }

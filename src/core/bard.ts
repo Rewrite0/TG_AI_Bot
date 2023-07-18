@@ -1,10 +1,11 @@
-import Bard from 'bard-ai';
 import { config } from '@config';
+import { Bard } from 'googlebard';
+import { createProxy } from '@/utils/proxy';
 
-async function BardInit() {
-  const cookies = config.bardCookie;
-  await Bard.init(cookies);
-  console.log('Bard init');
-}
+const cookies = `__Secure-1PSID=${config.bardCookie}`;
 
-export { BardInit, Bard };
+export const bard = new Bard(cookies, {
+  inMemory: false,
+  savePath: 'conversations.json',
+  proxy: createProxy(),
+});
