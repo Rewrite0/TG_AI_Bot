@@ -20,13 +20,13 @@ export async function chat(message: string, id: number) {
   myConsole(message);
 
   try {
-    const reply = await bard.ask(message, `id-${id}`);
+    const reply = (await bard.ask(message, `id-${id}`)) as string;
 
     bardConsole(reply);
 
     return reply;
   } catch (error) {
     console.log(`Chat Error: \n\n ${error}`);
-    return '回复时出现错误, 请查看日志!';
+    return '回复时出现错误, 请查看日志。';
   }
 }
