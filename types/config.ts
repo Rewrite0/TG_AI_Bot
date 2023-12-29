@@ -1,13 +1,13 @@
 export interface Config {
   /**
-   * Google Bard Cookie
-   * 查看 https://github.com/PawanOsman/GoogleBard#prerequisite---how-to-get-cookies
+   * Google gemini api key
+   * 从 https://makersuite.google.com/app/apikey 获取
    */
-  bardCookie: string;
+  apiKey: string;
   /**
    * Telegram Bot Token
    */
-  tgToken: string;
+  botToken: string;
   /**
    * Telegram User Id, 多个以 , 分隔
    * 仅数组中的用户可私聊使用

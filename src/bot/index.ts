@@ -1,5 +1,6 @@
 import process from 'node:process';
 import { run } from '@grammyjs/runner';
+import { config } from '@config';
 import {
   handleCommand,
   handleGroup,
@@ -22,11 +23,15 @@ export async function runBot() {
     console.log(`Bot Error: \n${err}`);
   });
 
-  setCommands();
-  // run
+  await setCommands();
+
   const handle = run(bot);
 
   console.log('bot is running...');
+
+  config.adminId.forEach((id) => {
+    bot.api.sendMessage(id, 'bot 已启动!');
+  });
 
   handle.task()?.then(() => {
     handle.stop();

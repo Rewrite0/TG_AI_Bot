@@ -35,7 +35,7 @@ handleGroup.on('message::mention', async (ctx) => {
     const m = await ctx.reply('请等待...', {
       reply_to_message_id: ctx.msg.message_id,
     });
-    const final = await chat(text, id);
+    const final = await chat(text, ctx, id);
 
     await ctx.api.deleteMessage(m.chat.id, m.message_id);
 

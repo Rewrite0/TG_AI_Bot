@@ -1,14 +1,13 @@
 import { Composer } from 'grammy';
 import type { MyContext } from '#/bot';
-import { isAdminUser, useBot } from '@/utils/useBot';
-import { bard } from '@/core/bard';
+import { isAdminUser, isChatUser, useBot } from '@/utils/useBot';
 import { bot } from '@/core/bot';
 
 export const handleCommand = new Composer<MyContext>();
 
 export async function setCommands() {
   try {
-    console.log('set commands...');
+    console.log('await set commands...');
     await bot.api.setMyCommands([
       { command: 'help', description: '帮助' },
       { command: 'reset', description: '重置对话' },
@@ -36,11 +35,11 @@ handleCommand.command('reset', async (ctx) => {
 
   if (type === 'group' || type === 'supergroup') {
     if (ctx.from && ctx.from.id) {
-      bard.resetConversation(`id-${ctx.from.id}`);
+      ctx.session.history[ctx.from.id] = undefined;
     }
   }
   if (type === 'private') {
-    bard.resetConversation(`id-${ctx.chat.id}`);
+    ctx.session.history[ctx.chat.id] = undefined;
   }
 
   await ctx.reply('对话已重置!', {
@@ -58,7 +57,13 @@ handleCommand.command('help', async (ctx) => {
   const type = ctx.chat.type;
   const isPrivate = type === 'private';
 
-  const message = `这是一个可以与 Google Bard 对话的 bot. \n\n每个人有独立的对话上下文. \n\n- 使用 /reset 可以重置对话. \n- 使用 /status 查看当前群组是否可用. \n- 使用 /allow 仅管理员可用, 允许当前群组使用. \n- 使用 /not_allow 仅管理员可用, 禁止当前群组使用.`;
+  const message = `Google Gemini-pro Bot.
+可在受允许的私聊和群组中使用.
+
+- 使用 /reset 可以重置对话.
+- 使用 /status 查看当前群组是否可用.
+- 使用 /allow 仅管理员可用, 允许当前群组使用.
+- 使用 /not_allow 仅管理员可用, 禁止当前群组使用.`;
 
   await ctx.reply(message, {
     reply_to_message_id: isPrivate ? undefined : ctx.msg.message_id,
@@ -114,7 +119,14 @@ handleCommand.command('status', async (ctx) => {
   const isPrivate = type === 'private';
   const session = ctx.session;
 
-  if (isPrivate) return;
+  if (isPrivate) {
+    if (isChatUser(ctx.chat.id)) {
+      await ctx.reply('当前私聊可使用!');
+    } else {
+      await ctx.reply('当前私聊不可使用!');
+    }
+    return;
+  }
 
   if (session.isUse) {
     await ctx.reply('当前群组可使用!', {

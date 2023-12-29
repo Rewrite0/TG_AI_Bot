@@ -1,8 +1,8 @@
 import type { Config } from '#/config';
 
 export const config: Config = {
-  bardCookie: '',
-  tgToken: '',
+  apiKey: '',
+  botToken: '',
   chatId: [],
   adminId: [],
   proxy: '',

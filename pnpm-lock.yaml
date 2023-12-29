@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@google/generative-ai':
+    specifier: ^0.1.3
+    version: 0.1.3
   '@grammyjs/runner':
     specifier: ^2.0.3
     version: 2.0.3(grammy@1.17.2)
@@ -26,6 +29,9 @@ dependencies:
   pm2:
     specifier: ^5.3.0
     version: 5.3.0
+  undici:
+    specifier: ^6.2.1
+    version: 6.2.1
 
 devDependencies:
   '@antfu/eslint-config':
@@ -411,6 +417,16 @@ packages:
     resolution: {integrity: sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fastify/busboy@2.1.0:
+    resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
+    engines: {node: '>=14'}
+    dev: false
+
+  /@google/generative-ai@0.1.3:
+    resolution: {integrity: sha512-Cm4uJX1sKarpm1mje/MiOIinM7zdUUrQp/5/qGPAgznbdd/B9zup5ehT6c1qGqycFcSopTA1J1HpqHS5kJR8hQ==}
+    engines: {node: '>=18.0.0'}
+    dev: false
 
   /@grammyjs/runner@2.0.3(grammy@1.17.2):
     resolution: {integrity: sha512-nckmTs1dPWfVQteK9cxqxzE+0m1VRvluLWB8UgFzsjg62w3qthPJt0TYtJBEdG7OedvfQq4vnFAyE6iaMkR42A==}
@@ -2376,6 +2392,7 @@ packages:
 
   /json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -2831,6 +2848,7 @@ packages:
   /pidusage@2.0.21:
     resolution: {integrity: sha512-cv3xAQos+pugVX+BfXpHsbyz/dLzX+lr44zNMsYiGxUw+kV5sgQCIcLd1z+0vq+KyC7dJ+/ts2PsfgWfSC3WXA==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       safe-buffer: 5.2.1
     dev: false
@@ -3361,6 +3379,7 @@ packages:
     engines: {node: '>=8.0.0'}
     os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
     hasBin: true
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -3440,6 +3459,7 @@ packages:
 
   /tx2@1.0.5:
     resolution: {integrity: sha512-sJ24w0y03Md/bxzK4FU8J8JveYYUbSs2FViLJ2D/8bytSiyPRbuE3DyL/9UKYXTZlV3yXq0L8GLlhobTnekCVg==}
+    requiresBuild: true
     dependencies:
       json-stringify-safe: 5.0.1
     dev: false
@@ -3488,6 +3508,13 @@ packages:
   /ufo@1.1.2:
     resolution: {integrity: sha512-TrY6DsjTQQgyS3E3dBaOXf0TpPD8u9FVrVYmKVegJuFw51n/YB9XPt+U6ydzFG5ZIN7+DIjPbNmXoBj9esYhgQ==}
     dev: true
+
+  /undici@6.2.1:
+    resolution: {integrity: sha512-7Wa9thEM6/LMnnKtxJHlc8SrTlDmxqJecgz1iy8KlsN0/iskQXOQCuPkrZLXbElPaSw5slFFyKIKXyJ3UtbApw==}
+    engines: {node: '>=18.0'}
+    dependencies:
+      '@fastify/busboy': 2.1.0
+    dev: false
 
   /unist-util-stringify-position@2.0.3:
     resolution: {integrity: sha512-3faScn5I+hy9VleOq/qNbAd6pAx7iH5jYBMS9I1HgQVijz/4mv5Bvw5iw1sC/90CODiKo81G/ps8AJrISn687g==}

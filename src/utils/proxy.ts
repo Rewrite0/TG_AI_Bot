@@ -1,5 +1,6 @@
 import process from 'node:process';
 import { URL } from 'node:url';
+import { ProxyAgent, setGlobalDispatcher } from 'undici';
 import { config } from '@config';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
@@ -51,5 +52,12 @@ export function setProxyEnv() {
     process.env.http_proxy = config.proxy;
     process.env.https_proxy = config.proxy;
     process.env.all_proxy = config.proxy;
+  }
+
+  if (process.env.http_proxy) {
+    const agent = new ProxyAgent({
+      uri: new URL(process.env.http_proxy).toString(),
+    });
+    setGlobalDispatcher(agent);
   }
 }

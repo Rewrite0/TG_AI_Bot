@@ -20,7 +20,7 @@ handlePrivate.on('message:text', async (ctx) => {
 
   const m = await ctx.reply('请等待...');
 
-  const final = await chat(msg, id);
+  const final = await chat(msg, ctx, id);
 
   await ctx.api.deleteMessage(m.chat.id, m.message_id);
 

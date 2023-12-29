@@ -5,7 +5,7 @@ export function isAdminUser(id: number) {
 }
 
 export function isChatUser(id: number) {
-  return config.chatId.includes(id);
+  return config.chatId.includes(id) || isAdminUser(id);
 }
 
 export function useBot(type: 'group' | 'private', id: number) {
