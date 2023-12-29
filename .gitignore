@@ -12,9 +12,9 @@ dist
 dist.zip
 dist-ssr
 *.local
-/config.ts
 /conversations.json
 /sessions
+.env
 
 # Editor directories and files
 .vscode/*

@@ -27,8 +27,8 @@
    ```
 
 3. 更改配置
-   将目录下的 `config.example.ts` 复制一份并改名为 `config.ts`.
-   然后按照 [config 类型文件](./types/config.ts) 的注释, 在 `config.ts` 中填写相关信息.
+
+   将目录下的 `.env.example` 复制一份并改名为 `.env`, 然后根据注释填写相关信息.
 
 4. 启动
 
