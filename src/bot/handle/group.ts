@@ -44,3 +44,29 @@ handleGroup.on('message::mention', async (ctx) => {
     });
   }
 });
+
+// 对回复做出响应
+handleGroup.on('message').filter(
+  async (ctx) => {
+    return ctx.me.id === ctx.message?.reply_to_message?.from?.id;
+  },
+  async (ctx) => {
+    if (!ctx.session.isUse) return;
+    const message = ctx.message;
+    const text = message.text;
+    const id = ctx.from.id;
+
+    if (!text) return;
+
+    const m = await ctx.reply('请等待...', {
+      reply_to_message_id: ctx.msg.message_id,
+    });
+    const final = await chat(text, ctx, id);
+
+    await ctx.api.deleteMessage(m.chat.id, m.message_id);
+
+    await ctx.reply(final, {
+      reply_to_message_id: ctx.msg.message_id,
+    });
+  }
+);

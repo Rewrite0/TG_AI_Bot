@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "vite-node app.ts",
-    "dev": "vite-node -w app.ts",
+    "start": "tsx app.ts",
+    "dev": "tsx app.ts --watch",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
@@ -28,8 +28,8 @@
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
+    "tsx": "^4.7.1",
     "vite": "^4.4.4",
-    "vite-node": "^0.31.4",
     "vitest": "^0.31.4"
   }
 }
