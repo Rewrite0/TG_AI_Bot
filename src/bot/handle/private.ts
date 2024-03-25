@@ -24,5 +24,11 @@ handlePrivate.on('message:text', async (ctx) => {
 
   await ctx.api.deleteMessage(m.chat.id, m.message_id);
 
-  await ctx.reply(final);
+  try {
+    await ctx.reply(final, {
+      parse_mode: 'MarkdownV2',
+    });
+  } catch (error) {
+    await ctx.reply(final);
+  }
 });

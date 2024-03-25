@@ -39,9 +39,16 @@ handleGroup.on('message::mention', async (ctx) => {
 
     await ctx.api.deleteMessage(m.chat.id, m.message_id);
 
-    await ctx.reply(final, {
-      reply_to_message_id: ctx.msg.message_id,
-    });
+    try {
+      await ctx.reply(final, {
+        reply_to_message_id: ctx.msg.message_id,
+        parse_mode: 'MarkdownV2',
+      });
+    } catch (error) {
+      await ctx.reply(final, {
+        reply_to_message_id: ctx.msg.message_id,
+      });
+    }
   }
 });
 
@@ -65,8 +72,15 @@ handleGroup.on('message').filter(
 
     await ctx.api.deleteMessage(m.chat.id, m.message_id);
 
-    await ctx.reply(final, {
-      reply_to_message_id: ctx.msg.message_id,
-    });
+    try {
+      await ctx.reply(final, {
+        reply_to_message_id: ctx.msg.message_id,
+        parse_mode: 'MarkdownV2',
+      });
+    } catch (error) {
+      await ctx.reply(final, {
+        reply_to_message_id: ctx.msg.message_id,
+      });
+    }
   }
 );
