@@ -1,9 +1,9 @@
 import { gemini } from '@/core/gemini';
 import type { MyContext } from '#/bot';
 
-function myConsole(msg: string) {
+function userConsole(msg: string) {
   console.log('========================');
-  console.log(`My: ${msg}`);
+  console.log(`User: ${msg}`);
   console.log('====');
 }
 
@@ -18,7 +18,7 @@ function bardConsole(msg: string) {
  * @param id 聊天人的id, 私聊是 chat.id 群组是 from.id
  */
 export async function chat(message: string, ctx: MyContext, id: number) {
-  myConsole(message);
+  userConsole(message);
 
   const { history, lastTime } = ctx.session;
   const { init, getHistory, sendMessage } = gemini.useChat();
@@ -42,7 +42,6 @@ export async function chat(message: string, ctx: MyContext, id: number) {
 
     return reply;
   } catch (error) {
-    console.log(`Chat Error: \n\n ${error}`);
-    return '回复时出现错误, 请查看日志。';
+    return error;
   }
 }
