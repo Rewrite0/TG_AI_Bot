@@ -42,6 +42,6 @@ export async function chat(message: string, ctx: MyContext, id: number) {
 
     return reply;
   } catch (error) {
-    return error;
+    return error as string;
   }
 }
