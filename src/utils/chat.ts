@@ -41,7 +41,8 @@ export async function chat(message: string, ctx: MyContext, id: number) {
     ctx.session.history[id] = await getHistory();
 
     return reply;
-  } catch (error) {
-    return error as string;
+  } catch (error: any) {
+    console.log('Chat error: ', error);
+    return error.message as string;
   }
 }

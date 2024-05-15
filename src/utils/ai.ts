@@ -13,7 +13,7 @@ export class GeminiBot {
 
   constructor(apiKey: string) {
     const genAI = new GoogleGenerativeAI(apiKey);
-    this.model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+    this.model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' });
   }
 
   async singleChat(prompt: string): Promise<string>;
