@@ -57,8 +57,9 @@ handleCommand.command('help', async (ctx) => {
   const type = ctx.chat.type;
   const isPrivate = type === 'private';
 
-  const message = `Google Gemini-pro Bot.
+  const message = `Google Gemini Bot.
 可在受允许的私聊和群组中使用.
+当前模型: gemini-1.5-flash-latest
 
 - 使用 /reset 可以重置对话.
 - 使用 /status 查看当前群组是否可用.

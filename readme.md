@@ -4,13 +4,13 @@
 
 该 Telegram Bot 可以与生成式 AI 对话, 每个人都有独立的上下文.
 
-> 当前模型: [Google Gemini-pro](https://ai.google.dev/)
+> 当前模型: [gemini-1.5-flash-latest](https://ai.google.dev/)
 
 ## 使用
 
 在使用前, 请确保安装了 `nodejs` 以及 `pnpm`.
 
-并在 https://makersuite.google.com/app/apikey 获取 Gemini-pro 的 apikey
+并在 https://makersuite.google.com/app/apikey 获取 Gemini apikey
 
 ### 安装
 
